@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ResultHub | Student Result Management</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">R</div>
+
+            <div>
+                <h2>ResultHub</h2>
+                <span>Academic Portal</span>
+            </div>
+        </div>
+
+        <nav class="navigation">
+
+            <p class="nav-label">MAIN</p>
+
+            <a href="#" class="nav-item active" onclick="showPage('dashboard', this)">
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="#" class="nav-item" onclick="showPage('students', this)">
+                <span class="nav-icon">♙</span>
+                <span>Students</span>
+            </a>
+
+            <a href="#" class="nav-item" onclick="showPage('subjects', this)">
+                <span class="nav-icon">▣</span>
+                <span>Subjects</span>
+            </a>
+
+            <a href="#" class="nav-item" onclick="showPage('results', this)">
+                <span class="nav-icon">▤</span>
+                <span>Results</span>
+            </a>
+
+            <p class="nav-label">SYSTEM</p>
+
+            <a href="#" class="nav-item">
+                <span class="nav-icon">⚙</span>
+                <span>Settings</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="admin-card">
+
+                <div class="avatar">A</div>
+
+                <div class="admin-info">
+                    <strong>Administrator</strong>
+                    <span>Result Manager</span>
+                </div>
+
+                <button class="more-btn">•••</button>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <div class="main">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <button class="menu-btn" onclick="toggleSidebar()">
+                ☰
+            </button>
+
+            <div class="breadcrumb">
+                <span>Academic Portal</span>
+                <b>/</b>
+                <strong id="pageTitle">Dashboard</strong>
+            </div>
+
+            <div class="top-actions">
+
+                <div class="search">
+                    <span>⌕</span>
+
+                    <input
+                        type="text"
+                        placeholder="Search students..."
+                        id="globalSearch"
+                        oninput="searchStudents()">
+                </div>
+
+                <button class="icon-btn">
+                    ♢
+                    <span class="notification-dot"></span>
+                </button>
+
+                <div class="top-avatar">
+                    A
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- CONTENT -->
+
+        <main class="content">
+
+
+            <!-- DASHBOARD -->
+
+            <section id="dashboard" class="page active-page">
+
+                <div class="page-heading">
+
+                    <div>
+                        <h1>Good afternoon, Admin</h1>
+
+                        <p>
+                            Here's an overview of your student result system.
+                        </p>
+                    </div>
+
+                    <button class="primary-btn" onclick="openStudentModal()">
+                        <span>＋</span>
+                        Add Student
+                    </button>
+
+                </div>
+
+
+                <!-- STATISTICS -->
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+
+                        <div class="stat-top">
+                            <span class="stat-label">Total Students</span>
+                            <div class="stat-icon blue">♙</div>
+                        </div>
+
+                        <div class="stat-value" id="studentCount">0</div>
+
+                        <div class="stat-footer">
+                            <span class="positive">↑ Active</span>
+                            <span>Registered students</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-top">
+                            <span class="stat-label">Total Results</span>
+                            <div class="stat-icon purple">▤</div>
+                        </div>
+
+                        <div class="stat-value" id="resultCount">0</div>
+
+                        <div class="stat-footer">
+                            <span class="positive">↑ Updated</span>
+                            <span>Records stored</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-top">
+                            <span class="stat-label">Passed</span>
+                            <div class="stat-icon green">✓</div>
+                        </div>
+
+                        <div class="stat-value" id="passedCount">0</div>
+
+                        <div class="stat-footer">
+                            <span class="positive">PASS</span>
+                            <span>Successful results</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-top">
+                            <span class="stat-label">Failed</span>
+                            <div class="stat-icon red">!</div>
+                        </div>
+
+                        <div class="stat-value" id="failedCount">0</div>
+
+                        <div class="stat-footer">
+                            <span class="negative">Review</span>
+                            <span>Need attention</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MAIN DASHBOARD GRID -->
+
+                <div class="dashboard-grid">
+
+                    <div class="panel large-panel">
+
+                        <div class="panel-header">
+
+                            <div>
+                                <h2>Recent Results</h2>
+                                <p>Latest student result records</p>
+                            </div>
+
+                            <button
+                                class="text-btn"
+                                onclick="showPageById('results')">
+                                View all →
+                            </button>
+
+                        </div>
+
+
+                        <div class="table-wrapper">
+
+                            <table>
+
+                                <thead>
+
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Roll No.</th>
+                                    <th>Semester</th>
+                                    <th>Percentage</th>
+                                    <th>Status</th>
+                                </tr>
+
+                                </thead>
+
+                                <tbody id="recentResults">
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+
+                            <div>
+                                <h2>Quick Actions</h2>
+                                <p>Common tasks</p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="quick-actions">
+
+                            <button onclick="openStudentModal()">
+
+                                <div class="quick-icon blue">
+                                    ♙
+                                </div>
+
+                                <div>
+                                    <strong>Add Student</strong>
+                                    <span>Register a new student</span>
+                                </div>
+
+                                <b>→</b>
+
+                            </button>
+
+
+                            <button onclick="openSubjectModal()">
+
+                                <div class="quick-icon purple">
+                                    ▣
+                                </div>
+
+                                <div>
+                                    <strong>Add Subject</strong>
+                                    <span>Create a new subject</span>
+                                </div>
+
+                                <b>→</b>
+
+                            </button>
+
+
+                            <button onclick="showPageById('results')">
+
+                                <div class="quick-icon green">
+                                    ▤
+                                </div>
+
+                                <div>
+                                    <strong>Enter Result</strong>
+                                    <span>Add student marks</span>
+                                </div>
+
+                                <b>→</b>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- STUDENTS -->
+
+            <section id="students" class="page">
+
+                <div class="page-heading">
+
+                    <div>
+                        <h1>Students</h1>
+                        <p>Manage registered students.</p>
+                    </div>
+
+                    <button class="primary-btn" onclick="openStudentModal()">
+                        ＋ Add Student
+                    </button>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <h2>Student Directory</h2>
+                            <p id="studentTotal">0 students registered</p>
+                        </div>
+
+                        <div class="table-search">
+                            <span>⌕</span>
+                            <input
+                                id="studentSearch"
+                                placeholder="Search..."
+                                oninput="filterStudentTable()">
+                        </div>
+
+                    </div>
+
+
+                    <div class="table-wrapper">
+
+                        <table>
+
+                            <thead>
+
+                            <tr>
+                                <th>Student</th>
+                                <th>Roll Number</th>
+                                <th>Course</th>
+                                <th>Branch</th>
+                                <th>Semester</th>
+                                <th>Actions</th>
+                            </tr>
+
+                            </thead>
+
+                            <tbody id="studentsTable">
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- SUBJECTS -->
+
+            <section id="subjects" class="page">
+
+                <div class="page-heading">
+
+                    <div>
+                        <h1>Subjects</h1>
+                        <p>Manage subjects used for semester results.</p>
+                    </div>
+
+                    <button class="primary-btn" onclick="openSubjectModal()">
+                        ＋ Add Subject
+                    </button>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <h2>Subject Directory</h2>
+                            <p>All available subjects</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="subject-grid" id="subjectsGrid">
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- RESULTS -->
+
+            <section id="results" class="page">
+
+                <div class="page-heading">
+
+                    <div>
+                        <h1>Results</h1>
+                        <p>Enter and review semester results.</p>
+                    </div>
+
+                    <button class="primary-btn" onclick="openResultModal()">
+                        ＋ Enter Result
+                    </button>
+
+                </div>
+
+
+                <div class="result-selector panel">
+
+                    <div>
+
+                        <label>Select Student</label>
+
+                        <select id="resultStudentSelect">
+                            <option value="">Choose a student</option>
+                        </select>
+
+                    </div>
+
+                    <button
+                        class="primary-btn"
+                        onclick="loadStudentResult()">
+                        View Result
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="result-preview panel"
+                    id="resultPreview"
+                    style="display:none;">
+
+                    <div class="result-header">
+
+                        <div>
+
+                            <span class="result-label">
+                                SEMESTER RESULT
+                            </span>
+
+                            <h2 id="resultStudentName">
+                                Student Name
+                            </h2>
+
+                            <p id="resultStudentInfo">
+                                Student information
+                            </p>
+
+                        </div>
+
+                        <div class="result-score">
+
+                            <span>Overall Score</span>
+
+                            <strong id="resultPercentage">
+                                0%
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="table-wrapper">
+
+                        <table>
+
+                            <thead>
+
+                            <tr>
+                                <th>Subject</th>
+                                <th>Internal</th>
+                                <th>External</th>
+                                <th>Total</th>
+                                <th>Grade</th>
+                                <th>Status</th>
+                            </tr>
+
+                            </thead>
+
+                            <tbody id="resultTable">
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                    <div class="result-summary">
+
+                        <div>
+                            <span>Total Marks</span>
+                            <strong id="totalMarks">0</strong>
+                        </div>
+
+                        <div>
+                            <span>Percentage</span>
+                            <strong id="percentage">0%</strong>
+                        </div>
+
+                        <div>
+                            <span>Final Result</span>
+                            <strong id="overallResult">-</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</div>
+
+
+<!-- STUDENT MODAL -->
+
+<div class="modal-overlay" id="studentModal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <div>
+                <h2>Add New Student</h2>
+                <p>Enter student information below.</p>
+            </div>
+
+            <button onclick="closeModal('studentModal')">
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="studentForm">
+
+            <div class="modal-grid">
+
+                <div class="input-group">
+                    <label>Roll Number</label>
+                    <input id="rollNo" required placeholder="e.g. 101">
+                </div>
+
+                <div class="input-group">
+                    <label>Student Name</label>
+                    <input id="name" required placeholder="Full name">
+                </div>
+
+                <div class="input-group">
+                    <label>Course</label>
+                    <input id="course" value="B.E." required>
+                </div>
+
+                <div class="input-group">
+                    <label>Branch</label>
+                    <input id="branch" required placeholder="Computer Engineering">
+                </div>
+
+                <div class="input-group">
+                    <label>Semester</label>
+
+                    <select id="semester" required>
+
+                        <option value="">Select semester</option>
+
+                        <option value="1">Semester 1</option>
+                        <option value="2">Semester 2</option>
+                        <option value="3">Semester 3</option>
+                        <option value="4">Semester 4</option>
+                        <option value="5">Semester 5</option>
+                        <option value="6">Semester 6</option>
+                        <option value="7">Semester 7</option>
+                        <option value="8">Semester 8</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="secondary-btn"
+                    onclick="closeModal('studentModal')">
+                    Cancel
+                </button>
+
+                <button type="submit" class="primary-btn">
+                    Add Student
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- SUBJECT MODAL -->
+
+<div class="modal-overlay" id="subjectModal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <div>
+                <h2>Add New Subject</h2>
+                <p>Create a subject for result management.</p>
+            </div>
+
+            <button onclick="closeModal('subjectModal')">
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="subjectForm">
+
+            <div class="modal-grid">
+
+                <div class="input-group">
+                    <label>Subject Code</label>
+                    <input id="subjectCode" required placeholder="CS301">
+                </div>
+
+                <div class="input-group">
+                    <label>Subject Name</label>
+                    <input id="subjectName" required placeholder="Database Management System">
+                </div>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="secondary-btn"
+                    onclick="closeModal('subjectModal')">
+                    Cancel
+                </button>
+
+                <button type="submit" class="primary-btn">
+                    Add Subject
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- RESULT MODAL -->
+
+<div class="modal-overlay" id="resultModal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <div>
+                <h2>Enter Student Result</h2>
+                <p>Enter marks for a subject.</p>
+            </div>
+
+            <button onclick="closeModal('resultModal')">
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="resultForm">
+
+            <div class="input-group">
+                <label>Student</label>
+
+                <select id="studentSelect" required>
+                    <option value="">Select student</option>
+                </select>
+            </div>
+
+
+            <div class="input-group">
+                <label>Subject</label>
+
+                <select id="subjectSelect" required>
+                    <option value="">Select subject</option>
+                </select>
+            </div>
+
+
+            <div class="modal-grid">
+
+                <div class="input-group">
+                    <label>Internal Marks</label>
+
+                    <input
+                        type="number"
+                        id="internalMarks"
+                        min="0"
+                        max="30"
+                        required
+                        placeholder="0 – 30">
+                </div>
+
+
+                <div class="input-group">
+                    <label>External Marks</label>
+
+                    <input
+                        type="number"
+                        id="externalMarks"
+                        min="0"
+                        max="70"
+                        required
+                        placeholder="0 – 70">
+                </div>
+
+            </div>
+
+
+            <div class="marks-info">
+
+                <span>Maximum marks</span>
+
+                <strong>100</strong>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="secondary-btn"
+                    onclick="closeModal('resultModal')">
+                    Cancel
+                </button>
+
+                <button type="submit" class="primary-btn">
+                    Save Result
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div class="toast" id="toast">
+
+    <div class="toast-icon">✓</div>
+
+    <div>
+        <strong id="toastTitle">Success</strong>
+        <span id="toastMessage">Operation completed.</span>
+    </div>
+
+</div>
+
+
+<script src="app.js"></script>
+
+</body>
+</html>
